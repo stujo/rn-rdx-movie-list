@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "react": "16.2.0",
-    "react-native": "~0.53.3"
+    "react-native": "~0.53.3",
+    "react-redux": "^5.0.7",
+    "redux": "^3.6.0"
   }
 }
