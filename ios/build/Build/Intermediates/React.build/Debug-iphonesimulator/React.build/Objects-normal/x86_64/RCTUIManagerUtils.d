@@ -1,0 +1,5 @@
+dependencies: \
+  /Users/sjones/work/rn-rdx-movie-list/node_modules/react-native/React/Modules/RCTUIManagerUtils.m \
+  /Users/sjones/work/rn-rdx-movie-list/node_modules/react-native/React/Modules/RCTUIManagerUtils.h \
+  /Users/sjones/work/rn-rdx-movie-list/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/sjones/work/rn-rdx-movie-list/node_modules/react-native/React/Base/RCTDefines.h
