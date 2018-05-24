@@ -2,6 +2,8 @@ import React from 'react';
 import { Component } from 'react'
 import { connect } from 'react-redux';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { attemptLogin, attemptLogout } from '../services/Authentication/actions'
+
 
 const fieldSize = { height: 30, width: 140 }
 
@@ -49,7 +51,10 @@ class LoginScreen extends Component {
 
     validateFormAndSend = () => {
         if (this.validateForm()) {
-            this.props.onAttemptLogin()
+            this.props.onAttemptLogin({
+                username: this.state.username.value,
+                password: this.state.password.value
+            })
         }
     }
 
@@ -64,15 +69,15 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: { value: '', error: undefined },
-            password: { value: '', error: undefined },
+            username: { value: 'demo123', error: undefined },
+            password: { value: 'passwd', error: undefined },
         }
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text>Login</Text>
+                <Text>Login - {this.props.busy ? 'Busy' : 'OK!'}</Text>
                 <TextInput
                     placeholder="Username..."
                     style={this.fieldStyle("username")}
@@ -95,14 +100,13 @@ class LoginScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.loginScreen ? state.loginScreen.username : '',
-        password: state.loginScreen ? state.loginScreen.password : '',
+        busy: state.authenticationService ? state.authenticationService.isFetching : false
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAttemptLogin: (details) => dispatch({ type: 'Authentication.ATTEMPT_LOGIN', details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN_' }),
+        onAttemptLogin: (creds) => dispatch(attemptLogin(creds)),
     }
 }
 

@@ -8,22 +8,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import thunkMiddleware from 'redux-thunk';
 
-// actions.js
-
-export const testAction = () => ({
-    type: 'TEST_ACTION',
-});
-
-// reducers.js
-const user = (state = {}, action) => {
-    switch (action.type) {
-        case 'CURRENT_USERNAME_INPUT':
-            return { ...state, current_username_input: action.text };
-        default:
-            return state;
-    }
-};
-
 const loginScreen = (state = {}, action) => {
     switch (action.type) {
         // case 'loginScreen.USERNAME_UPDATE':
@@ -55,7 +39,6 @@ const devToolsOptions = {
 };
 
 export const reducers = combineReducers({
-    user,
     loginScreen,
     authenticationService,
 });
@@ -78,8 +61,4 @@ export function configureStore(initialState = {}) {
     return store;
 };
 
-export const store = configureStore({
-    user: {
-        username: 'anon1234'
-    }
-});
+export const store = configureStore({});
