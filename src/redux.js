@@ -41,6 +41,7 @@ const loginScreen = (state = {}, action) => {
     }
 };
 
+import authenticationService from './services/Authentication/reducers'
 
 declare var __DEV__: boolean;
 
@@ -56,6 +57,7 @@ const devToolsOptions = {
 export const reducers = combineReducers({
     user,
     loginScreen,
+    authenticationService,
 });
 
 const middleware = [thunkMiddleware];

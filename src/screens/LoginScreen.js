@@ -94,7 +94,6 @@ class LoginScreen extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         username: state.loginScreen ? state.loginScreen.username : '',
         password: state.loginScreen ? state.loginScreen.password : '',
@@ -103,7 +102,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAttemptLogin: (details) => dispatch({ type: 'loginScreen.ATTEMPT_LOGIN', details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN_' }),
+        onAttemptLogin: (details) => dispatch({ type: 'Authentication.ATTEMPT_LOGIN', details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN_' }),
     }
 }
 
