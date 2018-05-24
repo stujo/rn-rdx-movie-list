@@ -28,8 +28,14 @@ const loginScreen = (state = {}, action) => {
     switch (action.type) {
         // case 'loginScreen.USERNAME_UPDATE':
         //     return { ...state, username: action.text };
-        // case 'loginScreen.PASSWORD_UPDATE':
-        //     return { ...state, password: action.text };
+        // case 'loginScreen.USERNAME_UPDATE':
+        //     return { ...state, username: action.text };
+        case 'loginScreen.ATTEMPT_LOGIN':
+
+            // { type: 'loginScreen.ATTEMPT_LOGIN', payload: { details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN_' } }
+
+
+            return { ...state, pending_operation: action.callback_prefix };
         default:
             return state;
     }

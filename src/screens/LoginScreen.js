@@ -16,59 +16,35 @@ const styles = StyleSheet.create({
     invalidTextField: { ...fieldSize, borderColor: 'red', borderWidth: 1 },
 });
 
-
 class LoginScreen extends Component {
 
     hasError = (field) => {
-        return this.state.errors[field] !== undefined
-    }
-
-    addError = (field, message) => {
-        let errors = Object.assign({}, this.state.errors)
-        errors[field] = message
-        this.setState({
-            errors: errors
-        })
-    }
-
-    clearError = (field) => {
-        let errors = Object.assign({}, this.state.errors)
-        delete errors[field]
-        this.setState({
-            errors: errors
-        })
+        return !!this.state[field].error
     }
 
     onUsernameUpdate = (value) => {
-        this.setState({ username: value })
-        if (!this.state.username || this.state.username.length < 5) {
-            this.addError("username", "Too Short!")
-            return;
+        let error = undefined;
+        if (!value || value.length < 5) {
+            error = "Too Short!"
         }
-        this.clearError("username")
-        return;
+        this.setState({ username: { value, error } })
+        return error === undefined;
     }
 
     onPasswordUpdate = (value) => {
-        this.setState({ password: value })
-        if (!this.state.password || this.state.password.length < 5) {
-            this.addError("password", "Too Short!")
-            return;
+        let error = undefined;
+        if (!value || value.length < 5) {
+            error = "Too Short!"
         }
-        this.clearError("password")
-        return;
+        this.setState({ password: { value, error } })
+        return error === undefined;
     }
 
     validateForm = () => {
-        if (!this.validateUsername()) {
-            return false;
-        }
-
-        if (!this.validatePassword()) {
-            return false;
-        }
-
-        return true;
+        let valid = true
+        valid = this.onUsernameUpdate(this.state.username.value) && valid
+        valid = this.onPasswordUpdate(this.state.username.value) && valid
+        return valid
     }
 
     validateFormAndSend = () => {
@@ -88,9 +64,8 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            password: '',
-            errors: {}
+            username: { value: '', error: undefined },
+            password: { value: '', error: undefined },
         }
     }
 
@@ -101,17 +76,18 @@ class LoginScreen extends Component {
                 <TextInput
                     placeholder="Username..."
                     style={this.fieldStyle("username")}
-                    onChangeText={this.onUsernameUpdate} value={this.state.username}
+                    onChangeText={this.onUsernameUpdate} value={this.state.username.value}
                 />
                 <TextInput
                     placeholder="Password..."
                     style={this.fieldStyle("password")}
                     secureTextEntry={true}
-                    onChangeText={this.onPasswordUpdate} value={this.state.password}
+                    onChangeText={this.onPasswordUpdate} value={this.state.password.value}
                 />
                 <Button
                     title="Sign Up!"
                     onPress={this.validateFormAndSend} />
+                <Text>{JSON.stringify(this.state)}</Text>
             </View>
         );
     }
@@ -127,7 +103,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAttemptLogin: (details) => dispatch({ type: 'loginScreen.ATTEMPT_LOGIN', payload: { details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN' } }),
+        onAttemptLogin: (details) => dispatch({ type: 'loginScreen.ATTEMPT_LOGIN', details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN_' }),
     }
 }
 
