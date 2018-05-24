@@ -17,31 +17,25 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Login Screen</Text>
+                <Text>Login Screen ({this.props.current_username_input})</Text>
                 <TextInput
                     style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={(text) => console.log(text)}
-                    value={`hello`}
+                    onChangeText={this.props.changeUsernameInput}
                 />
             </View>
         );
     }
 }
 
-const testAction = () => ({
-    type: 'TEST_ACTION_LOGIN_SCREEN',
-});
-
-// AppContainer.js
 const mapStateToProps = (state) => ({
-
+    username: state.user.username,
+    password: state.user.password,
+    current_username_input: state.user.current_username_input,
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        testAction: () => {
-            dispatch(testAction())
-        }
+        changeUsernameInput: (text) => dispatch({ type: 'CURRENT_USERNAME_INPUT', text }),
     }
 };
 

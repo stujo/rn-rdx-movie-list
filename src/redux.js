@@ -11,19 +11,17 @@ export const testAction = () => ({
 });
 
 // reducers.js
-export const dvas0004 = (state = {}, action) => {
+export const user = (state = {}, action) => {
     switch (action.type) {
-        case 'TEST_ACTION':
-            return {
-                content: "Hi From TEST"
-            };
+        case 'CURRENT_USERNAME_INPUT':
+            return { ...state, current_username_input: action.text };
         default:
             return state;
     }
 };
 
 export const reducers = combineReducers({
-    dvas0004,
+    user,
 });
 
 // store.js
@@ -35,4 +33,6 @@ export function configureStore(initialState = {}) {
     return store;
 };
 
-export const store = configureStore();
+export const store = configureStore({
+    user: {}
+});
