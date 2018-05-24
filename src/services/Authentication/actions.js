@@ -48,27 +48,30 @@ export function attemptLogin(creds) {
         // We dispatch requestLogin to kickoff the call to the API
         dispatch(requestLogin(creds))
 
-        return fetch('http://localhost:3001/sessions/create', config)
-            .then(response =>
-                response.json().then(user => ({ user, response }))
-            ).then(({ user, response }) => {
-                if (!response.ok) {
-                    // If there was a problem, we want to
-                    // dispatch the error condition
-                    dispatch(loginError(user.message))
-                    return Promise.reject(user)
-                }
-            }).then((user) => {
-                return Promise.all([
-                    AsyncStorage.setItem('id_token', user.id_token),
-                    AsyncStorage.setItem('access_token', user.access_token),
-                    Promise.resolve(user)
-                ])
-            }).then(([_a, _b, user]) => {
-                dispatch(receiveLogin(user))
-            }).catch((err) => {
-                dispatch(loginError(err.message))
-            })
+        // Delay so we can see it! DEMO ONLY
+        return new Promise(
+            resolve => setTimeout(() => resolve(), 1000)
+        ).then(() => { return fetch('http://localhost:3001/sessions/create', config) }
+        ).then(response =>
+            response.json().then(user => ({ user, response }))
+        ).then(({ user, response }) => {
+            if (!response.ok) {
+                // If there was a problem, we want to
+                // dispatch the error condition
+                dispatch(loginError(user.message))
+                return Promise.reject(user)
+            }
+        }).then((user) => {
+            return Promise.all([
+                AsyncStorage.setItem('id_token', user.id_token),
+                AsyncStorage.setItem('access_token', user.access_token),
+                Promise.resolve(user)
+            ])
+        }).then(([_a, _b, user]) => {
+            dispatch(receiveLogin(user))
+        }).catch((err) => {
+            dispatch(loginError(err.message))
+        })
     }
 }
 

@@ -3,6 +3,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { attemptLogin, attemptLogout } from '../services/Authentication/actions'
+import LoaderModal from '../components/LoaderModal';
 
 
 const fieldSize = { height: 30, width: 140 }
@@ -77,7 +78,8 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Login - {this.props.busy ? 'Busy' : 'OK!'}</Text>
+                <LoaderModal loading={this.props.busy} />
+                <Text>Login</Text>
                 <TextInput
                     placeholder="Username..."
                     style={this.fieldStyle("username")}
