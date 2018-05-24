@@ -1,7 +1,9 @@
 import React from 'react';
 import { Component } from 'react'
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+
+const fieldSize = { height: 30, width: 140 }
 
 const styles = StyleSheet.create({
     container: {
@@ -10,25 +12,106 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    textField: { ...fieldSize, borderColor: 'grey', borderWidth: 1 },
+    invalidTextField: { ...fieldSize, borderColor: 'red', borderWidth: 1 },
 });
 
 
 class LoginScreen extends Component {
+
+    hasError = (field) => {
+        return this.state.errors[field] !== undefined
+    }
+
+    addError = (field, message) => {
+        let errors = Object.assign({}, this.state.errors)
+        errors[field] = message
+        this.setState({
+            errors: errors
+        })
+    }
+
+    clearError = (field) => {
+        let errors = Object.assign({}, this.state.errors)
+        delete errors[field]
+        this.setState({
+            errors: errors
+        })
+    }
+
+    onUsernameUpdate = (value) => {
+        this.setState({ username: value })
+        if (!this.state.username || this.state.username.length < 5) {
+            this.addError("username", "Too Short!")
+            return;
+        }
+        this.clearError("username")
+        return;
+    }
+
+    onPasswordUpdate = (value) => {
+        this.setState({ password: value })
+        if (!this.state.password || this.state.password.length < 5) {
+            this.addError("password", "Too Short!")
+            return;
+        }
+        this.clearError("password")
+        return;
+    }
+
+    validateForm = () => {
+        if (!this.validateUsername()) {
+            return false;
+        }
+
+        if (!this.validatePassword()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    validateFormAndSend = () => {
+        if (this.validateForm()) {
+            this.props.onAttemptLogin()
+        }
+    }
+
+    fieldStyle = (field) => {
+        if (this.hasError(field)) {
+            return styles.invalidTextField
+        } else {
+            return styles.textField
+        }
+    }
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            username: '',
+            password: '',
+            errors: {}
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>Login Screen ({this.props.current_username_input})</Text>
+                <Text>Login</Text>
                 <TextInput
                     placeholder="Username..."
-                    style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={(text) => this.props.onUsernameUpdate(text)} value={this.props.username}
+                    style={this.fieldStyle("username")}
+                    onChangeText={this.onUsernameUpdate} value={this.state.username}
                 />
                 <TextInput
                     placeholder="Password..."
-                    style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1 }}
+                    style={this.fieldStyle("password")}
                     secureTextEntry={true}
-                    onChangeText={(text) => this.props.onPasswordUpdate(text)} value={this.props.password}
+                    onChangeText={this.onPasswordUpdate} value={this.state.password}
                 />
+                <Button
+                    title="Sign Up!"
+                    onPress={this.validateFormAndSend} />
             </View>
         );
     }
@@ -44,8 +127,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onUsernameUpdate: (text) => dispatch({ type: 'loginScreen.USERNAME_UPDATE', text: text }),
-        onPasswordUpdate: (text) => dispatch({ type: 'loginScreen.PASSWORD_UPDATE', yexy: text }),
+        onAttemptLogin: (details) => dispatch({ type: 'loginScreen.ATTEMPT_LOGIN', payload: { details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN' } }),
     }
 }
 

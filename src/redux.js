@@ -26,10 +26,10 @@ const user = (state = {}, action) => {
 
 const loginScreen = (state = {}, action) => {
     switch (action.type) {
-        case 'loginScreen.USERNAME_UPDATE':
-            return { ...state, username: action.text };
-        case 'loginScreen.PASSWORD_UPDATE':
-            return { ...state, password: action.text };
+        // case 'loginScreen.USERNAME_UPDATE':
+        //     return { ...state, username: action.text };
+        // case 'loginScreen.PASSWORD_UPDATE':
+        //     return { ...state, password: action.text };
         default:
             return state;
     }
