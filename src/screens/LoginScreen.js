@@ -45,7 +45,7 @@ class LoginScreen extends Component {
     validateForm = () => {
         let valid = true
         valid = this.onUsernameUpdate(this.state.username.value) && valid
-        valid = this.onPasswordUpdate(this.state.username.value) && valid
+        valid = this.onPasswordUpdate(this.state.password.value) && valid
         return valid
     }
 
