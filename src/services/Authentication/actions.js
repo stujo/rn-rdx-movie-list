@@ -2,9 +2,9 @@ import { AsyncStorage } from 'react'
 
 // There are three possible states for our login
 // process and we need actions for each of them
-export const LOGIN_REQUEST = 'app.services.Authentication.LOGIN_REQUEST'
-export const LOGIN_SUCCESS = 'app.services.Authentication.LOGIN_SUCCESS'
-export const LOGIN_FAILURE = 'app.services.Authentication.LOGIN_FAILURE'
+export const LOGIN_REQUEST = 'Authentication.LOGIN_REQUEST'
+export const LOGIN_SUCCESS = 'Authentication.LOGIN_SUCCESS'
+export const LOGIN_FAILURE = 'Authentication.LOGIN_FAILURE'
 
 function requestLogin(creds) {
     return {
@@ -72,9 +72,9 @@ export function attemptLogin(creds) {
     }
 }
 
-export const LOGOUT_REQUEST = 'app.services.Authentication.LOGOUT_REQUEST'
-export const LOGOUT_SUCCESS = 'app.services.Authentication.LOGOUT_SUCCESS'
-export const LOGOUT_FAILURE = 'app.services.Authentication.LOGOUT_FAILURE'
+export const LOGOUT_REQUEST = 'Authentication.LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS = 'Authentication.LOGOUT_SUCCESS'
+export const LOGOUT_FAILURE = 'Authentication.LOGOUT_FAILURE'
 
 function requestLogout() {
     return {
@@ -91,7 +91,6 @@ function receiveLogout() {
         isAuthenticated: false
     }
 }
-
 // Logs the user out
 export function attemptLogout() {
     return dispatch => {
