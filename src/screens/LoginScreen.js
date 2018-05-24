@@ -4,19 +4,20 @@ import { connect } from 'react-redux';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { attemptLogin, attemptLogout } from '../services/Authentication/actions'
 import LoaderModal from '../components/LoaderModal';
+import StyleConstants from '../StyleConstants';
 
 
-const fieldBasics = { height: 30, width: 140, borderWidth: 1 }
+const fieldBasics = { ...StyleConstants.textInput, height: 30, width: 140 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: StyleConstants.backgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    textField: { ...fieldBasics, borderColor: 'grey' },
-    invalidTextField: { ...fieldBasics, borderColor: 'red' },
+    textField: { ...fieldBasics },
+    invalidTextField: { ...fieldBasics, ...StyleConstants.invalidInput },
 });
 
 class LoginScreen extends Component {

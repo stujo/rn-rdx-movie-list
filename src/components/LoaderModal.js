@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {
+    ActivityIndicator,
+    Dimensions,
+    Modal,
     StyleSheet,
     View,
-    Modal,
-    ActivityIndicator
 } from 'react-native';
 
 // https://medium.com/@kelleyannerose/react-native-activityindicator-for-a-quick-easy-loading-animation-593c06c044dc
