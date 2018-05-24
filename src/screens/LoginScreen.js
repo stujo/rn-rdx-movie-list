@@ -19,25 +19,35 @@ class LoginScreen extends Component {
             <View style={styles.container}>
                 <Text>Login Screen ({this.props.current_username_input})</Text>
                 <TextInput
+                    placeholder="Username..."
                     style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={this.props.changeUsernameInput}
+                    onChangeText={(text) => this.props.onUsernameUpdate(text)} value={this.props.username}
+                />
+                <TextInput
+                    placeholder="Password..."
+                    style={{ height: 40, width: 100, borderColor: 'gray', borderWidth: 1 }}
+                    secureTextEntry={true}
+                    onChangeText={(text) => this.props.onPasswordUpdate(text)} value={this.props.password}
                 />
             </View>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-    username: state.user.username,
-    password: state.user.password,
-    current_username_input: state.user.current_username_input,
-});
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        username: state.loginScreen ? state.loginScreen.username : '',
+        password: state.loginScreen ? state.loginScreen.password : '',
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeUsernameInput: (text) => dispatch({ type: 'CURRENT_USERNAME_INPUT', text }),
+        onUsernameUpdate: (text) => dispatch({ type: 'loginScreen.USERNAME_UPDATE', text: text }),
+        onPasswordUpdate: (text) => dispatch({ type: 'loginScreen.PASSWORD_UPDATE', yexy: text }),
     }
-};
+}
 
 export default connect(
     mapStateToProps,
