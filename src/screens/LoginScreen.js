@@ -6,7 +6,7 @@ import { attemptLogin, attemptLogout } from '../services/Authentication/actions'
 import LoaderModal from '../components/LoaderModal';
 
 
-const fieldSize = { height: 30, width: 140 }
+const fieldBasics = { height: 30, width: 140, borderWidth: 1 }
 
 const styles = StyleSheet.create({
     container: {
@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    textField: { ...fieldSize, borderColor: 'grey', borderWidth: 1 },
-    invalidTextField: { ...fieldSize, borderColor: 'red', borderWidth: 1 },
+    textField: { ...fieldBasics, borderColor: 'grey' },
+    invalidTextField: { ...fieldBasics, borderColor: 'red' },
 });
 
 class LoginScreen extends Component {
@@ -82,13 +82,19 @@ class LoginScreen extends Component {
                 <Text>Login</Text>
                 <TextInput
                     placeholder="Username..."
+                    autoCapitalize='none'
+                    autoCorrect='false'
                     style={this.fieldStyle("username")}
                     onChangeText={this.onUsernameUpdate} value={this.state.username.value}
+                    onSubmitEditing={this.validateFormAndSend}
                 />
                 <TextInput
                     placeholder="Password..."
                     style={this.fieldStyle("password")}
+                    autoCapitalize='none'
+                    autoCorrect='false'
                     secureTextEntry={true}
+                    onSubmitEditing={this.validateFormAndSend}
                     onChangeText={this.onPasswordUpdate} value={this.state.password.value}
                 />
                 <Button

@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react'
+import { AsyncStorage } from 'react-native'
 
 // There are three possible states for our login
 // process and we need actions for each of them
@@ -33,6 +33,20 @@ function loginError(message) {
     }
 }
 
+class FakeResponse {
+    constructor(result, success = true) {
+        this.result = result;
+        this.success = success
+    }
+
+    get ok() {
+        return !!this.success
+    }
+
+    json() {
+        return Promise.resolve(this.result)
+    }
+}
 
 // Calls the API to get a token and
 // dispatches actions along the way
@@ -51,25 +65,44 @@ export function attemptLogin(creds) {
         // Delay so we can see it! DEMO ONLY
         return new Promise(
             resolve => setTimeout(() => resolve(), 1000)
-        ).then(() => { return fetch('http://localhost:3001/sessions/create', config) }
-        ).then(response =>
-            response.json().then(user => ({ user, response }))
-        ).then(({ user, response }) => {
+        ).then(() => {
+            console.log(creds)
+            //return fetch('http://localhost:3001/sessions/create', config)
+            // Fake responses based on username
+            if (creds.username[0] == 'a') {
+                throw { message: "Network Error: Username begins with 'a'" }
+            } else if (creds.username[0] == 'b') {
+                return Promise.resolve(new FakeResponse({
+                    message: 'Server Error: Username starts with \'b\''
+                }, false))
+            } else {
+                return Promise.resolve(new FakeResponse({
+                    id_token: 'my_id_token_1234',
+                    access_token: 'my_access_token_1234'
+                }, true))
+            }
+        }).then(response =>
+            response.json().then((payload) => {
+                return { payload, response }
+            })
+        ).then(({ payload, response }) => {
             if (!response.ok) {
                 // If there was a problem, we want to
                 // dispatch the error condition
-                dispatch(loginError(user.message))
-                return Promise.reject(user)
+                throw payload;
+            } else {
+                return payload;
             }
         }).then((user) => {
             return Promise.all([
                 AsyncStorage.setItem('id_token', user.id_token),
                 AsyncStorage.setItem('access_token', user.access_token),
                 Promise.resolve(user)
-            ])
-        }).then(([_a, _b, user]) => {
+            ]).then(([_a, _b, user]) => (user))
+        }).then((user) => {
             dispatch(receiveLogin(user))
         }).catch((err) => {
+            console.log(err)
             dispatch(loginError(err.message))
         })
     }
