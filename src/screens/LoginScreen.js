@@ -83,7 +83,7 @@ class LoginScreen extends Component {
                 <TextInput
                     placeholder="Username..."
                     autoCapitalize='none'
-                    autoCorrect='false'
+                    autoCorrect={false}
                     style={this.fieldStyle("username")}
                     onChangeText={this.onUsernameUpdate} value={this.state.username.value}
                     onSubmitEditing={this.validateFormAndSend}
@@ -92,7 +92,7 @@ class LoginScreen extends Component {
                     placeholder="Password..."
                     style={this.fieldStyle("password")}
                     autoCapitalize='none'
-                    autoCorrect='false'
+                    autoCorrect={false}
                     secureTextEntry={true}
                     onSubmitEditing={this.validateFormAndSend}
                     onChangeText={this.onPasswordUpdate} value={this.state.password.value}
