@@ -10,12 +10,10 @@ import StyleConstants from '../StyleConstants';
 const fieldBasics = { ...StyleConstants.textInput, height: 30, width: 140 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: StyleConstants.backgroundColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+    mainContainer: { ...StyleConstants.mainContainer },
+    titleContainer: { ...StyleConstants.titleContainer },
+    title: { ...StyleConstants.title },
+    inputContainer: { ...StyleConstants.inputContainer },
     textField: { ...fieldBasics },
     invalidTextField: { ...fieldBasics, ...StyleConstants.invalidInput },
 });
@@ -78,26 +76,32 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.mainContainer}>
                 <LoaderModal loading={this.props.busy} />
-                <Text>Login</Text>
-                <TextInput
-                    placeholder="Username..."
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    style={this.fieldStyle("username")}
-                    onChangeText={this.onUsernameUpdate} value={this.state.username.value}
-                    onSubmitEditing={this.validateFormAndSend}
-                />
-                <TextInput
-                    placeholder="Password..."
-                    style={this.fieldStyle("password")}
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    onSubmitEditing={this.validateFormAndSend}
-                    onChangeText={this.onPasswordUpdate} value={this.state.password.value}
-                />
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Login</Text>
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholder="Username..."
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        style={this.fieldStyle("username")}
+                        onChangeText={this.onUsernameUpdate} value={this.state.username.value}
+                        onSubmitEditing={this.validateFormAndSend}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholder="Password..."
+                        style={this.fieldStyle("password")}
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        secureTextEntry={true}
+                        onSubmitEditing={this.validateFormAndSend}
+                        onChangeText={this.onPasswordUpdate} value={this.state.password.value}
+                    />
+                </View>
                 <Button
                     title="Sign Up!"
                     onPress={this.validateFormAndSend} />
