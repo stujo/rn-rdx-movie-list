@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { Component } from 'react'
 import { connect } from 'react-redux';
@@ -13,7 +15,11 @@ const styles = StyleSheet.create({
     title: { ...StyleConstants.title },
 });
 
-class LoginScreen extends Component {
+type Props = {
+    isLoggedIn: boolean
+};
+
+class LoginScreen extends Component<Props> {
     render() {
         const isLoggedIn = this.props.isLoggedIn;
         return (

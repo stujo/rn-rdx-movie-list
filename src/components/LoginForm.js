@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { Component } from 'react'
 import { connect } from 'react-redux';
@@ -19,7 +21,23 @@ const styles = StyleSheet.create({
     submitButton: { ...StyleConstants.submitButton },
 });
 
-class LoginForm extends Component {
+type Props = {
+    onAttemptLogin: Function,
+    busy: boolean
+};
+
+type State = {
+    username: {
+        value: any,
+        error: any
+    },
+    password: {
+        value: any,
+        error: any
+    }
+};
+
+class LoginForm extends Component<Props, State> {
 
     hasError = (field) => {
         return !!this.state[field].error

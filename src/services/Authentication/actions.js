@@ -1,3 +1,5 @@
+// @flow
+
 import { AsyncStorage } from 'react-native'
 
 // There are three possible states for our login
@@ -35,7 +37,10 @@ function loginError(message) {
 }
 
 class FakeResponse {
-    constructor(result, success = true) {
+    result: Object;
+    success: boolean;
+
+    constructor(result: Object, success: boolean = true) {
         this.result = result;
         this.success = success
     }
@@ -50,67 +55,91 @@ class FakeResponse {
 }
 
 
-function delayPromise(n) {
+function delayPromise(n: number, response: any): Promise<any> {
     return new Promise(
-        resolve => setTimeout(() => resolve(), n)
+        resolve => setTimeout(() => resolve(response), n)
     )
 }
 
-// Calls the API to get a token and
-// dispatches actions along the way
-export function attemptLogin(creds) {
+type Credentials = {
+    username: string,
+    password: string,
+};
 
-    let config = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `username=${creds.username}&password=${creds.password}`
+type User = {
+    id_token: string,
+    access_token: string,
+}
+
+function fakeLoginAPI(creds: Credentials): Promise<FakeResponse> {
+    //return fetch('http://localhost:3001/sessions/create', config)
+    // Fake responses based on username
+    if (creds.username[0] == 'a') {
+        throw { message: "Network Error: Username begins with 'a'" }
+    } else if (creds.username[0] == 'b') {
+        return Promise.resolve(new FakeResponse({
+            message: 'Server Error: Username starts with \'b\''
+        }, false))
+    } else {
+        return Promise.resolve(new FakeResponse({
+            id_token: 'my_id_token_1234',
+            access_token: 'my_access_token_1234'
+        }, true))
     }
+}
 
-    return dispatch => {
-        // We dispatch requestLogin to kickoff the call to the API
-        dispatch(requestLogin(creds))
-
-        // Delay so we can see it! DEMO ONLY
-        return delayPromise(2000).then(() => {
-            console.log(creds)
-            //return fetch('http://localhost:3001/sessions/create', config)
-            // Fake responses based on username
-            if (creds.username[0] == 'a') {
-                throw { message: "Network Error: Username begins with 'a'" }
-            } else if (creds.username[0] == 'b') {
-                return Promise.resolve(new FakeResponse({
-                    message: 'Server Error: Username starts with \'b\''
-                }, false))
-            } else {
-                return Promise.resolve(new FakeResponse({
-                    id_token: 'my_id_token_1234',
-                    access_token: 'my_access_token_1234'
-                }, true))
-            }
-        }).then(response =>
-            response.json().then((payload) => {
-                return { payload, response }
-            })
-        ).then(({ payload, response }) => {
-            if (!response.ok) {
-                // If there was a problem, we want to
-                // dispatch the error condition
-                throw payload;
-            } else {
-                return payload;
-            }
-        }).then((user) => {
-            return Promise.all([
-                AsyncStorage.setItem('id_token', user.id_token),
-                AsyncStorage.setItem('access_token', user.access_token),
-                Promise.resolve(user)
-            ]).then(([_a, _b, user]) => (user))
-        }).then((user) => {
-            dispatch(receiveLogin(user))
-        }).catch((err) => {
-            console.log(err)
-            dispatch(loginError(err.message))
+function extractJson(response: FakeResponse): Promise<{ payload: User, response: FakeResponse }> {
+    return response.json()
+        .then((payload) => {
+            return { payload, response }
         })
+}
+
+type extractPayloadParams = {
+    payload: User,
+    response: FakeResponse
+};
+
+function extractPayloadIfOk({ payload, response }: extractPayloadParams): User {
+    if (!response.ok) {
+        // If there was a problem, we want to
+        // dispatch the error condition
+        throw payload;
+    } else {
+        return payload;
+    }
+}
+
+function storeTokens(user: Object): Promise<Object> {
+    return Promise.all([
+        AsyncStorage.setItem('id_token', user.id_token),
+        AsyncStorage.setItem('access_token', user.access_token),
+        Promise.resolve(user)
+    ]).then(([_a, _b, user]) => (user))
+}
+
+function dispatchReceiveLogin(dispatch: Function, user: User): void {
+    dispatch(receiveLogin(user))
+}
+
+function dispatchLoginError(dispatch: Function, err: Object): void {
+    console.log("Login Error", err)
+    dispatch(loginError(err.message))
+}
+
+// Calls the (Fake) API to get a token and
+// dispatches actions along the way
+export function attemptLogin(creds: Credentials): Function {
+    return (dispatch: Function) => {
+        dispatch(requestLogin(creds))
+        // Delay so we can see it! DEMO ONLY
+        delayPromise(2000, creds)
+            .then(fakeLoginAPI)
+            .then(extractJson)
+            .then(extractPayloadIfOk)
+            .then(storeTokens)
+            .then((user) => dispatchReceiveLogin(dispatch, user))
+            .catch((err) => dispatchLoginError(dispatch, err))
     }
 }
 
@@ -144,7 +173,7 @@ function logoutError(message) {
 
 // Logs the user out
 export function attemptLogout() {
-    return dispatch => {
+    return (dispatch: Function) => {
         dispatch(requestLogout())
         Promise.all([
             delayPromise(2000),

@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { Component } from 'react'
 import { connect } from 'react-redux';
@@ -7,13 +9,18 @@ import LoaderModal from '../components/LoaderModal';
 import StyleConstants from '../StyleConstants';
 import { authenticationBusy } from '../services/Authentication/selectors'
 
+type Props = {
+    busy: boolean,
+    onAttemptLogout: Function
+};
+
 const styles = StyleSheet.create({
     formContainer: { ...StyleConstants.formContainer },
     buttonsContainer: { ...StyleConstants.buttonsContainer },
     submitButton: { ...StyleConstants.submitButton },
 });
 
-class LogoutForm extends Component {
+class LogoutForm extends Component<Props> {
 
     validateForm = () => {
         let valid = true
@@ -50,7 +57,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAttemptLogout: (details) => dispatch(attemptLogout(details)),
+        onAttemptLogout: () => dispatch(attemptLogout()),
     }
 }
 

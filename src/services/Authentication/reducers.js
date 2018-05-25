@@ -1,3 +1,5 @@
+// @flow
+
 // https://auth0.com/blog/secure-your-react-and-redux-app-with-jwt-authentication/
 
 // import { AsyncStorage } from 'react'
@@ -8,13 +10,19 @@ import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, LOGOUT_REQUEST, LOGOUT_FAILURE
 } from './actions'
 
+
+type State = {
+    isFetching: boolean,
+    isAuthenticated: boolean
+}
+
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
 // we would also want a util to check if the token is expired.
-export default authenticationService = (state = {
+const authenticationService: Function = (state: State = {
     isFetching: false,
     isAuthenticated: false
-}, action) => {
+}, action: Object) => {
     switch (action.type) {
         case LOGIN_REQUEST:
             return Object.assign({}, state, {
@@ -61,3 +69,5 @@ export default authenticationService = (state = {
             return state
     }
 }
+
+export default authenticationService;
