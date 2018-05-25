@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/LoaderModal renders without errors 1`] = `
+<Component
+  animationType="none"
+  hardwareAccelerated={false}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#00000040",
+        "flex": 1,
+        "flexDirection": "column",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 10,
+            "display": "flex",
+            "justifyContent": "space-around",
+          },
+          Object {
+            "height": 375,
+            "width": 375,
+          },
+        ]
+      }
+    >
+      <ActivityIndicator
+        animating={true}
+        color="#EE7777"
+        hidesWhenStopped={true}
+        size="large"
+      />
+    </View>
+  </View>
+</Component>
+`;

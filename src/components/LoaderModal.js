@@ -15,7 +15,7 @@ type Props = {
     loading: boolean
 };
 
-const LoaderModal = (props: Props) => {
+export const LoaderModal = (props: Props) => {
     const {
         loading,
         ...attributes

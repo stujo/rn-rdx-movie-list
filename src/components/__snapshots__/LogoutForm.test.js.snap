@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/LogoutForm renders without errors 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "borderColor": "#333333",
+      "borderRadius": 5,
+      "borderWidth": 2,
+      "justifyContent": "center",
+      "padding": 5,
+    }
+  }
+>
+  <LoaderModal
+    loading={undefined}
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "backgroundColor": "#ffffff",
+        "justifyContent": "flex-start",
+        "padding": 5,
+      }
+    }
+  >
+    <Button
+      containerViewStyle={
+        Object {
+          "marginLeft": 0,
+          "width": "100%",
+        }
+      }
+      onPress={[Function]}
+      style={Object {}}
+      title="Logout"
+    />
+  </View>
+</View>
+`;

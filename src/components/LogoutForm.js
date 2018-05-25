@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     submitButton: { ...StyleConstants.submitButton },
 });
 
-class LogoutForm extends Component<Props> {
+export class LogoutForm extends Component<Props> {
 
     validateForm = () => {
         let valid = true
