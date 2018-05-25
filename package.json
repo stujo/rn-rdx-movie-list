@@ -19,7 +19,8 @@
     "flow": "flow",
     "flow-stop": "flow stop",
     "postinstall": "rndebugger-open  --expo",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
   },
   "jest": {
     "preset": "react-native",
