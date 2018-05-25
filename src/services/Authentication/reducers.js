@@ -10,8 +10,7 @@ import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, LOGOUT_REQUEST, LOGOUT_FAILURE
 } from './actions'
 
-
-type State = {
+export type State = {
     isFetching: boolean,
     isAuthenticated: boolean
 }
