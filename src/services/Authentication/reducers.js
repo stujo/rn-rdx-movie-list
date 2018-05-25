@@ -5,7 +5,7 @@
 //import { combineReducers } from 'redux'
 
 import {
-    LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
+    LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, LOGOUT_REQUEST, LOGOUT_FAILURE
 } from './actions'
 
 // The auth reducer. The starting state sets authentication
@@ -41,13 +41,21 @@ export default authenticationService = (state = {
                 accessToken: undefined,
                 user: undefined
             })
-        case LOGOUT_SUCCESS:
+        case LOGOUT_REQUEST:
             return Object.assign({}, state, {
                 isFetching: true,
+            })
+        case LOGOUT_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
                 isAuthenticated: false,
                 idToken: undefined,
                 accessToken: undefined,
                 user: undefined
+            })
+        case LOGOUT_FAILURE:
+            return Object.assign({}, state, {
+                isFetching: false,
             })
         default:
             return state

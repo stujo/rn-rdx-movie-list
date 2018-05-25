@@ -4,9 +4,17 @@ export default StyleConstants = {
     inputContainer: { padding: 5 },
     mainContainer: {
         flex: 1,
+        paddingTop: 20,
         backgroundColor: '#eeeeff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    formContainer: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 5,
     },
     textInput: {
         borderColor: '#333333',

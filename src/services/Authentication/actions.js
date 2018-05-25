@@ -49,6 +49,13 @@ class FakeResponse {
     }
 }
 
+
+function delayPromise(n) {
+    return new Promise(
+        resolve => setTimeout(() => resolve(), n)
+    )
+}
+
 // Calls the API to get a token and
 // dispatches actions along the way
 export function attemptLogin(creds) {
@@ -64,9 +71,7 @@ export function attemptLogin(creds) {
         dispatch(requestLogin(creds))
 
         // Delay so we can see it! DEMO ONLY
-        return new Promise(
-            resolve => setTimeout(() => resolve(), 1000)
-        ).then(() => {
+        return delayPromise(2000).then(() => {
             console.log(creds)
             //return fetch('http://localhost:3001/sessions/create', config)
             // Fake responses based on username
@@ -128,14 +133,28 @@ function receiveLogout() {
         isAuthenticated: false
     }
 }
+
+function logoutError(message) {
+    return {
+        type: LOGOUT_FAILURE,
+        isFetching: false,
+        message
+    }
+}
+
 // Logs the user out
 export function attemptLogout() {
     return dispatch => {
         dispatch(requestLogout())
-
         Promise.all([
+            delayPromise(2000),
             AsyncStorage.removeItem('id_token'),
-            AsyncStorage.remoteItem('access_token'),
-        ]).then(() => dispatch(receiveLogout()))
+            AsyncStorage.removeItem('access_token'),
+        ]).then(() =>
+            dispatch(receiveLogout())
+        ).catch((err) => {
+            console.log(err)
+            dispatch(logoutError(err.message))
+        })
     }
 }
