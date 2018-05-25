@@ -1,33 +1,16 @@
+// @flow
+declare var __DEV__: boolean;
+
 import {
     applyMiddleware,
     combineReducers,
     createStore,
+    compose,
 } from 'redux';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
-
 import thunkMiddleware from 'redux-thunk';
-
-const loginScreen = (state = {}, action) => {
-    switch (action.type) {
-        // case 'loginScreen.USERNAME_UPDATE':
-        //     return { ...state, username: action.text };
-        // case 'loginScreen.USERNAME_UPDATE':
-        //     return { ...state, username: action.text };
-        case 'loginScreen.ATTEMPT_LOGIN':
-
-            // { type: 'loginScreen.ATTEMPT_LOGIN', payload: { details: details, callback_prefix: 'loginScreen.ATTEMPT_LOGIN_' } }
-
-
-            return { ...state, pending_operation: action.callback_prefix };
-        default:
-            return state;
-    }
-};
-
 import authenticationService from './services/Authentication/reducers'
-
-declare var __DEV__: boolean;
 
 const devToolsOptions = {
     // This is the amount of items accessible in the redux dev tools
@@ -38,8 +21,7 @@ const devToolsOptions = {
     serialize: false,
 };
 
-export const reducers = combineReducers({
-    loginScreen,
+const reducers = combineReducers({
     authenticationService,
 });
 
@@ -52,7 +34,7 @@ const composeEnhancers = __DEV__
     : compose(...enhancers);
 
 // store.js
-export function configureStore(initialState = {}) {
+function configureStore(initialState: Object = {}) {
     const store = createStore(
         reducers,
         initialState,
@@ -61,4 +43,6 @@ export function configureStore(initialState = {}) {
     return store;
 };
 
-export const store = configureStore({});
+const initialState = {}
+
+export const store = configureStore(initialState);
