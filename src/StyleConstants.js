@@ -10,11 +10,19 @@ export default StyleConstants = {
         justifyContent: 'center',
     },
     formContainer: {
-        flex: 1,
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#333333',
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 5,
+    },
+    buttonsContainer: {
+        backgroundColor: '#ffffff',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        padding: 5
     },
     textInput: {
         borderColor: '#333333',

@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     inputContainer: { ...StyleConstants.inputContainer },
     textField: { ...fieldBasics },
     invalidTextField: { ...fieldBasics, ...StyleConstants.invalidInput },
+    buttonsContainer: { ...StyleConstants.buttonsContainer },
+    submitButton: { ...StyleConstants.submitButton },
 });
 
 class LoginForm extends Component {
@@ -97,10 +99,13 @@ class LoginForm extends Component {
                         onChangeText={this.onPasswordUpdate} value={this.state.password.value}
                     />
                 </View>
-                <Button
-                    title="Login"
-                    onPress={this.validateFormAndSend} />
-                <Text>{JSON.stringify(this.state)}</Text>
+                <View style={styles.buttonsContainer}>
+                    <Button
+                        style={styles.submitButton}
+                        containerViewStyle={{ width: '100%', marginLeft: 0 }}
+                        title="Login"
+                        onPress={this.validateFormAndSend} />
+                </View>
             </View>
         );
     }

@@ -32,6 +32,7 @@ class LogoutForm extends Component {
                 <View style={styles.buttonsContainer}>
                     <Button
                         style={styles.submitButton}
+                        containerViewStyle={{ width: '100%', marginLeft: 0 }}
                         title="Logout"
                         onPress={this.validateFormAndSend} />
                 </View>

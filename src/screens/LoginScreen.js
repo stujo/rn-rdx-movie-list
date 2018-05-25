@@ -18,7 +18,7 @@ class LoginScreen extends Component {
         return (
             <View style={styles.mainContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Login</Text>
+                    <Text style={styles.title}>Authentication</Text>
                 </View>
                 {isLoggedIn ? (<LogoutForm />) : (<LoginForm />)}
             </View>
