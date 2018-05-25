@@ -1,4 +1,6 @@
-export default StyleConstants = {
+// @flow
+
+const StyleConstants: Object = {
     titleContainer: { padding: 5 },
     title: { fontSize: 30 },
     inputContainer: { padding: 5 },
@@ -34,3 +36,5 @@ export default StyleConstants = {
         color: '#ff3333',
     }
 };
+
+export default StyleConstants
