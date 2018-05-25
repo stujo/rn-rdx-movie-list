@@ -24,46 +24,53 @@ const authenticationService: Function = (state: State = {
 }, action: Object) => {
     switch (action.type) {
         case LOGIN_REQUEST:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 isFetching: true,
                 isAuthenticated: false,
                 user: action.creds,
                 idToken: undefined,
                 accessToken: undefined
-            })
+
+            }
         case LOGIN_SUCCESS:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 isFetching: false,
                 isAuthenticated: true,
                 errorMessage: undefined,
                 idToken: action.id_token,
                 accessToken: action.access_token
-            })
+            }
         case LOGIN_FAILURE:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 isFetching: false,
                 isAuthenticated: false,
                 errorMessage: action.message,
                 idToken: undefined,
                 accessToken: undefined,
                 user: undefined
-            })
+            }
         case LOGOUT_REQUEST:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 isFetching: true,
-            })
+            }
         case LOGOUT_SUCCESS:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 isFetching: false,
                 isAuthenticated: false,
                 idToken: undefined,
                 accessToken: undefined,
                 user: undefined
-            })
+            }
         case LOGOUT_FAILURE:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 isFetching: false,
-            })
+            }
         default:
             return state
     }
