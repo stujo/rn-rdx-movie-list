@@ -36,7 +36,7 @@ function loginError(message) {
     }
 }
 
-class FakeResponse {
+class FakeFetchResponse {
     result: Object;
     success: boolean;
 
@@ -54,8 +54,7 @@ class FakeResponse {
     }
 }
 
-
-function delayPromise(n: number, response: any): Promise<any> {
+function delayPromise(n: number, response: any = undefined): Promise<any> {
     return new Promise(
         resolve => setTimeout(() => resolve(response), n)
     )
@@ -66,29 +65,29 @@ type Credentials = {
     password: string,
 };
 
-type User = {
+type UserTokens = {
     id_token: string,
     access_token: string,
 }
 
-function fakeLoginAPI(creds: Credentials): Promise<FakeResponse> {
+function fakeLoginAPI(creds: Credentials): Promise<FakeFetchResponse> {
     //return fetch('http://localhost:3001/sessions/create', config)
     // Fake responses based on username
     if (creds.username[0] == 'a') {
         throw { message: "Network Error: Username begins with 'a'" }
     } else if (creds.username[0] == 'b') {
-        return Promise.resolve(new FakeResponse({
+        return Promise.resolve(new FakeFetchResponse({
             message: 'Server Error: Username starts with \'b\''
         }, false))
     } else {
-        return Promise.resolve(new FakeResponse({
+        return Promise.resolve(new FakeFetchResponse({
             id_token: 'my_id_token_1234',
             access_token: 'my_access_token_1234'
         }, true))
     }
 }
 
-function extractJson(response: FakeResponse): Promise<{ payload: User, response: FakeResponse }> {
+function extractJson(response: FakeFetchResponse): Promise<{ payload: UserTokens, response: FakeFetchResponse }> {
     return response.json()
         .then((payload) => {
             return { payload, response }
@@ -96,11 +95,11 @@ function extractJson(response: FakeResponse): Promise<{ payload: User, response:
 }
 
 type extractPayloadParams = {
-    payload: User,
-    response: FakeResponse
+    payload: UserTokens,
+    response: FakeFetchResponse
 };
 
-function extractPayloadIfOk({ payload, response }: extractPayloadParams): User {
+function extractPayloadIfOk({ payload, response }: extractPayloadParams): UserTokens {
     if (!response.ok) {
         // If there was a problem, we want to
         // dispatch the error condition
@@ -118,7 +117,7 @@ function storeTokens(user: Object): Promise<Object> {
     ]).then(([_a, _b, user]) => (user))
 }
 
-function dispatchReceiveLogin(dispatch: Function, user: User): void {
+function dispatchReceiveLogin(dispatch: Function, user: UserTokens): void {
     dispatch(receiveLogin(user))
 }
 
@@ -127,6 +126,7 @@ function dispatchLoginError(dispatch: Function, err: Object): void {
     dispatch(loginError(err.message))
 }
 
+// THUNK!
 // Calls the (Fake) API to get a token and
 // dispatches actions along the way
 export function attemptLogin(creds: Credentials): Function {
@@ -171,7 +171,7 @@ function logoutError(message) {
     }
 }
 
-// Logs the user out
+// THUNK! Logs the user out
 export function attemptLogout() {
     return (dispatch: Function) => {
         dispatch(requestLogout())
