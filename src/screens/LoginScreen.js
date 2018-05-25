@@ -5,6 +5,7 @@ import StyleConstants from '../StyleConstants';
 import LoginForm from '../components/LoginForm';
 import { StyleSheet, Text, View } from 'react-native';
 import LogoutForm from '../components/LogoutForm';
+import { authenticationAuthenticated } from '../services/Authentication/selectors'
 
 const styles = StyleSheet.create({
     mainContainer: { ...StyleConstants.mainContainer },
@@ -28,7 +29,7 @@ class LoginScreen extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: !!state.authenticationService && !!state.authenticationService.isAuthenticated
+        isLoggedIn: authenticationAuthenticated(state)
     }
 };
 

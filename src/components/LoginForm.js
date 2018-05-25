@@ -5,6 +5,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { attemptLogin, attemptLogout } from '../services/Authentication/actions'
 import LoaderModal from '../components/LoaderModal';
 import StyleConstants from '../StyleConstants';
+import { authenticationBusy } from '../services/Authentication/selectors'
 
 
 const fieldBasics = { ...StyleConstants.textInput, height: 30, width: 140 }
@@ -113,7 +114,7 @@ class LoginForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        busy: state.authenticationService ? state.authenticationService.isFetching : false
+        busy: authenticationBusy(state)
     }
 };
 

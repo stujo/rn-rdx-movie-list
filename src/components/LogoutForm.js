@@ -5,6 +5,7 @@ import { Button, StyleSheet, View } from 'react-native';
 import { attemptLogout } from '../services/Authentication/actions'
 import LoaderModal from '../components/LoaderModal';
 import StyleConstants from '../StyleConstants';
+import { authenticationBusy } from '../services/Authentication/selectors'
 
 const styles = StyleSheet.create({
     formContainer: { ...StyleConstants.formContainer },
@@ -43,7 +44,7 @@ class LogoutForm extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        busy: state.authenticationService ? state.authenticationService.isFetching : false
+        busy: authenticationBusy(state)
     }
 };
 
