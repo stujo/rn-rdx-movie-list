@@ -39,11 +39,11 @@ type State = {
 
 export class LoginForm extends Component<Props, State> {
 
-    hasError = (field) => {
+    hasError = (field: string) => {
         return !!this.state[field].error
     }
 
-    onUsernameUpdate = (value) => {
+    onUsernameUpdate = (value: string) => {
         let error = undefined;
         if (!value || value.length < 5) {
             error = "Too Short!"
@@ -52,7 +52,7 @@ export class LoginForm extends Component<Props, State> {
         return error === undefined;
     }
 
-    onPasswordUpdate = (value) => {
+    onPasswordUpdate = (value: string) => {
         let error = undefined;
         if (!value || value.length < 5) {
             error = "Too Short!"
@@ -77,7 +77,7 @@ export class LoginForm extends Component<Props, State> {
         }
     }
 
-    fieldStyle = (field) => {
+    fieldStyle = (field: string) => {
         if (this.hasError(field)) {
             return styles.invalidTextField
         } else {
@@ -85,7 +85,7 @@ export class LoginForm extends Component<Props, State> {
         }
     }
 
-    constructor(props) {
+    constructor(props: Props) {
         super(props)
         this.state = {
             username: { value: 'demo123', error: undefined },
