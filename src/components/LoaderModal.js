@@ -20,24 +20,27 @@ const LoaderModal = (props: Props) => {
         loading,
         ...attributes
     } = props;
+
+    const { width, height } = Dimensions.get('window')
+    const indicatorSize = Math.min.apply(undefined, [width, height]) / 2
+    const sizing = { width: indicatorSize, height: indicatorSize }
+
     return (
         <Modal
             transparent={true}
             animationType={'none'}
             visible={loading}>
             <View style={styles.modalBackground}>
-                <View style={styles.activityIndicatorWrapper}>
+                <View style={[styles.activityIndicatorWrapper, sizing]} >
                     <ActivityIndicator
                         size="large"
                         color="#EE7777"
                         animating={loading} />
                 </View>
             </View>
-        </Modal>
+        </Modal >
     )
 }
-
-const { width, height } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     modalBackground: {
@@ -49,8 +52,6 @@ const styles = StyleSheet.create({
     },
     activityIndicatorWrapper: {
         backgroundColor: '#FFFFFF',
-        height: height / 2,
-        width: width / 2,
         borderRadius: 10,
         display: 'flex',
         alignItems: 'center',

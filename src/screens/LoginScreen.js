@@ -19,7 +19,7 @@ type Props = {
     isLoggedIn: boolean
 };
 
-class LoginScreen extends Component<Props> {
+export class LoginScreen extends Component<Props> {
     render() {
         const isLoggedIn = this.props.isLoggedIn;
         return (

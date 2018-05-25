@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/LoginForm renders without errors 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#ffffff",
+      "borderColor": "#333333",
+      "borderRadius": 5,
+      "borderWidth": 2,
+      "justifyContent": "center",
+      "padding": 5,
+    }
+  }
+>
+  <LoaderModal
+    loading={undefined}
+  />
+  <View
+    style={
+      Object {
+        "padding": 5,
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      autoCorrect={false}
+      onChangeText={[Function]}
+      onSubmitEditing={[Function]}
+      placeholder="Username..."
+      style={
+        Object {
+          "borderColor": "#333333",
+          "borderWidth": 2,
+          "color": "#333333",
+          "height": 30,
+          "width": 140,
+        }
+      }
+      value="demo123"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 5,
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      autoCorrect={false}
+      onChangeText={[Function]}
+      onSubmitEditing={[Function]}
+      placeholder="Password..."
+      secureTextEntry={true}
+      style={
+        Object {
+          "borderColor": "#333333",
+          "borderWidth": 2,
+          "color": "#333333",
+          "height": 30,
+          "width": 140,
+        }
+      }
+      value="passwd"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "backgroundColor": "#ffffff",
+        "justifyContent": "flex-start",
+        "padding": 5,
+      }
+    }
+  >
+    <Button
+      containerViewStyle={
+        Object {
+          "marginLeft": 0,
+          "width": "100%",
+        }
+      }
+      onPress={[Function]}
+      style={Object {}}
+      title="Login"
+    />
+  </View>
+</View>
+`;

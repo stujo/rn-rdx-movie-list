@@ -37,7 +37,7 @@ type State = {
     }
 };
 
-class LoginForm extends Component<Props, State> {
+export class LoginForm extends Component<Props, State> {
 
     hasError = (field) => {
         return !!this.state[field].error
