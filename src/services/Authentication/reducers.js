@@ -20,24 +20,34 @@ export default authenticationService = (state = {
             return Object.assign({}, state, {
                 isFetching: true,
                 isAuthenticated: false,
-                user: action.creds
+                user: action.creds,
+                idToken: undefined,
+                accessToken: undefined
             })
         case LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: true,
-                errorMessage: ''
+                errorMessage: undefined,
+                idToken: action.id_token,
+                accessToken: action.access_token
             })
         case LOGIN_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: false,
-                errorMessage: action.message
+                errorMessage: action.message,
+                idToken: undefined,
+                accessToken: undefined,
+                user: undefined
             })
         case LOGOUT_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: true,
-                isAuthenticated: false
+                isAuthenticated: false,
+                idToken: undefined,
+                accessToken: undefined,
+                user: undefined
             })
         default:
             return state
