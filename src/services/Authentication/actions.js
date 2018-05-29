@@ -133,7 +133,7 @@ export function attemptLogin(creds: Credentials): Function {
     return (dispatch: Function) => {
         dispatch(requestLogin(creds))
         // Delay so we can see it! DEMO ONLY
-        delayPromise(2000, creds)
+        return delayPromise(2000, creds)
             .then(fakeLoginAPI)
             .then(extractJson)
             .then(extractPayloadIfOk)
